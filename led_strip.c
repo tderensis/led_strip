@@ -7,8 +7,8 @@
 #include "led_strip.h"
 #include "led_strip_struct.h"
 #include "led_strip_no_backend.h"
-#include <assert.h>
-#include <string.h>
+#include <assert.h>  // for assert
+#include <stddef.h>  // for NULL
 
 #define PIXEL_BRIGHTNESS_MASK 0x1F
 #define PIXEL_BRIGHTNESS_HIGH_BITS 0xE0

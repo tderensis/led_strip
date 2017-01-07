@@ -47,7 +47,7 @@ void led_strip_clear(led_strip_t * led_strip);
 @param g  green
 @param b  blue
 @param brightness  The global brightness of the pixel, independent of color.
-                   Max brightness is 15.
+                   Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
 void led_strip_set_pixel_color(led_strip_t * led_strip, uint32_t p,
                                uint8_t r, uint8_t g, uint8_t b);
@@ -58,7 +58,7 @@ void led_strip_set_pixel_color(led_strip_t * led_strip, uint32_t p,
 @param led_strip The led strip object.
 @param p  The pixel index, starting at 0
 @param brightness  The global brightness of the pixel, independent of color.
-                   Max brightness is 15.
+                   Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
 void led_strip_set_pixel_brightness(led_strip_t * led_strip, uint32_t p,
                                     uint8_t brightness);
@@ -81,7 +81,7 @@ void led_strip_get_pixel_color(led_strip_t * led_strip, uint32_t p,
 @param led_strip The led strip object.
 @param p  The pixel index, starting at 0
 @return brightness  The global brightness of the pixel, independent of color.
-                    Max brightness is 15.
+                    Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
 uint8_t led_strip_get_pixel_brightness(led_strip_t * led_strip, uint32_t p);
 
@@ -100,7 +100,7 @@ void led_strip_set_color(led_strip_t * led_strip, uint8_t r, uint8_t g, uint8_t 
 
 @param led_strip The led strip object.
 @param brightness  The global brightness, independent of color.
-                   Max brightness is 15.
+                   Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
 void led_strip_set_brightness(led_strip_t * led_strip, uint8_t brightness);
 
@@ -113,7 +113,7 @@ void led_strip_set_brightness(led_strip_t * led_strip, uint8_t brightness);
 @param g  green
 @param b  blue
 @param brightness  The global brightness of the pixel, independent of color.
-                   Max brightness is 15.
+                   Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
 void led_strip_push_pixel_front(led_strip_t * led_strip,
                                 uint8_t r, uint8_t g, uint8_t b, uint8_t brightness);
@@ -127,7 +127,7 @@ void led_strip_push_pixel_front(led_strip_t * led_strip,
 @param g  green
 @param b  blue
 @param brightness  The global brightness of the pixel, independent of color.
-                   Max brightness is 15.
+                   Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
 void led_strip_push_pixel_back(led_strip_t * led_strip,
                                uint8_t r, uint8_t g, uint8_t b, uint8_t brightness);

@@ -59,7 +59,7 @@ void setup() {
       } else if (color_changing == BLUE) {
         b = lightness_8bit_50[i];
       }
-      led_strip_push_pixel_front(strip, r, g, b, 15);
+      led_strip_push_pixel_front(strip, r, g, b, PIXEL_MAX_BRIGHTNESS);
     }
   
     // Change which color is changing
