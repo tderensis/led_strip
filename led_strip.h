@@ -1,8 +1,10 @@
 /*!
 @file led_strip.h
 
-@brief The main header file for the led_strip. Users will also need to
-       include the header file for the backend for the create function.
+@brief The main header file for the led_strip. This file contains all public
+       interfaces for led strip except for the create function. Users will need
+       to include the header file for their specific backend which has the
+       create function.
 **/
 #ifndef LED_STRIP_H
 #define LED_STRIP_H
@@ -12,8 +14,12 @@
 #include <stdint.h>
 
 // Opaque data structure containing the LED strip data.
-// Actual structure defined in .c file
+// Users should only deal with a pointer to this object.
 typedef struct _led_strip_t led_strip_t;
+
+/*
+ * NOTE: Create functions can be found in the backend specific headers.
+ */
 
 /*
 @brief Destroy the led_strip and free all resources.
@@ -31,15 +37,15 @@ void led_strip_destroy(led_strip_t * led_strip);
 int led_strip_show(led_strip_t * led_strip);
 
 /*
-@breief Clear the entire LED strip. Just clears the buffer and does not
-        write to the strip.
+@breief Clear the entire LED strip and reset the strip to max brightness.
+        Just clears the buffer and does not write to the strip.
 
 @param led_strip The led strip object.
 */
 void led_strip_clear(led_strip_t * led_strip);
 
 /*
-@brief Set a pixel to a given color. Does not change brightness.
+@brief Set a pixel to a given color and brightness
 
 @param led_strip The led strip object.
 @param p  The pixel index, starting at 0
@@ -49,7 +55,22 @@ void led_strip_clear(led_strip_t * led_strip);
 @param brightness  The global brightness of the pixel, independent of color.
                    Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
-void led_strip_set_pixel_color(led_strip_t * led_strip, uint32_t p,
+void led_strip_set_pixel_color_and_brightness(led_strip_t * led_strip,
+                                              uint32_t p,
+                                              uint8_t r, uint8_t g, uint8_t b,
+                                              uint8_t brightness);
+
+/*
+@brief Set a pixel to a given color. Does not change brightness.
+
+@param led_strip The led strip object.
+@param p  The pixel index, starting at 0
+@param r  red
+@param g  green
+@param b  blue
+*/
+void led_strip_set_pixel_color(led_strip_t * led_strip,
+                               uint32_t p,
                                uint8_t r, uint8_t g, uint8_t b);
 
 /*
@@ -60,30 +81,40 @@ void led_strip_set_pixel_color(led_strip_t * led_strip, uint32_t p,
 @param brightness  The global brightness of the pixel, independent of color.
                    Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
-void led_strip_set_pixel_brightness(led_strip_t * led_strip, uint32_t p,
+void led_strip_set_pixel_brightness(led_strip_t * led_strip,
+                                    uint32_t p,
                                     uint8_t brightness);
 
 /*
-@brief Get the color components of a pixel
+@brief Get the color components of a pixel. NULL can be passed as
+       a pointer and that component will be ignored.
 
 @param led_strip The led strip object.
 @param p  The pixel index, starting at 0
 @param r  pointer to red
 @param g  pointer to green
 @param b  pointer to blue
+@param brightness  The global brightness of the pixel, independent of color.
+                   Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
-void led_strip_get_pixel_color(led_strip_t * led_strip, uint32_t p,
-                               uint8_t *r, uint8_t *g, uint8_t *b);
+void led_strip_get_pixel_color_and_brightness(led_strip_t * led_strip,
+                                              uint32_t p,
+                                              uint8_t *r, uint8_t *g, uint8_t *b,
+                                              uint8_t *brightness);
 
 /*
-@brief Get the global brightness of a pixel
+@brief Set the whole strip to a given color and brightness
 
 @param led_strip The led strip object.
-@param p  The pixel index, starting at 0
-@return brightness  The global brightness of the pixel, independent of color.
-                    Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
+@param r  red
+@param g  green
+@param b  blue
+@param brightness  The global brightness, independent of color.
+                   Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
-uint8_t led_strip_get_pixel_brightness(led_strip_t * led_strip, uint32_t p);
+void led_strip_set_color_and_brightness(led_strip_t * led_strip,
+                                        uint8_t r, uint8_t g, uint8_t b,
+                                        uint8_t brightness);
 
 /*
 @brief Set the whole strip to a given color
@@ -93,7 +124,8 @@ uint8_t led_strip_get_pixel_brightness(led_strip_t * led_strip, uint32_t p);
 @param g  green
 @param b  blue
 */
-void led_strip_set_color(led_strip_t * led_strip, uint8_t r, uint8_t g, uint8_t b);
+void led_strip_set_color(led_strip_t * led_strip,
+                         uint8_t r, uint8_t g, uint8_t b);
 
 /*
 @brief Set the whole strip to a given brightness
@@ -102,7 +134,8 @@ void led_strip_set_color(led_strip_t * led_strip, uint8_t r, uint8_t g, uint8_t 
 @param brightness  The global brightness, independent of color.
                    Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
-void led_strip_set_brightness(led_strip_t * led_strip, uint8_t brightness);
+void led_strip_set_brightness(led_strip_t * led_strip,
+                              uint8_t brightness);
 
 /*
 @brief Push a pixel into the front of the strip and move all other pixels
@@ -116,7 +149,8 @@ void led_strip_set_brightness(led_strip_t * led_strip, uint8_t brightness);
                    Max brightness is defined in PIXEL_MAX_BRIGHTNESS.
 */
 void led_strip_push_pixel_front(led_strip_t * led_strip,
-                                uint8_t r, uint8_t g, uint8_t b, uint8_t brightness);
+                                uint8_t r, uint8_t g, uint8_t b,
+                                uint8_t brightness);
 
 /*
 @brief Push a pixel into the back of the strip and move all other pixels
