@@ -7,7 +7,7 @@
 #ifndef LED_STRIP_H
 #define LED_STRIP_H
 
-#define PIXEL_MAX_BRIGHTNESS 15
+#define PIXEL_MAX_BRIGHTNESS 0x1F
 
 #include <stdint.h>
 

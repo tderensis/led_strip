@@ -10,7 +10,7 @@
 #include <assert.h>
 #include <string.h>
 
-#define PIXEL_BRIGHTNESS_MASK 0x0F
+#define PIXEL_BRIGHTNESS_MASK 0x1F
 #define PIXEL_BRIGHTNESS_HIGH_BITS 0xE0
 
 void led_strip_destroy(led_strip_t * led_strip)
