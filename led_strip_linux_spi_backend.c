@@ -1,9 +1,10 @@
-/*
+/*!
 @file led_strip_linux_spi_backend.c
 
 @brief Implements the create, destroy, and show functions for the
        Linux SPI backend.
-*/
+**/
+
 #include "led_strip_linux_spi_backend.h"
 #include "led_strip_no_backend.h"
 #include "led_strip_struct.h"
@@ -34,7 +35,7 @@ led_strip_t * led_strip_create_linux_spi(const char * device,
     // For this backend we want to make sure the SPI is working before
     // allocating anything.
     int ret = 0;
-    
+
     int fd = open(device, O_RDWR);
     if (fd < 0) {
         printf("Can't open device %s. Try sudo.\n", device);
@@ -54,7 +55,7 @@ led_strip_t * led_strip_create_linux_spi(const char * device,
         printf("Can't set bits per word.\n");
         return NULL;
     }
-    
+
     ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &frequency);
     if (ret == -1) {
         printf("Can't set max speed HZ.\n");
@@ -71,7 +72,7 @@ led_strip_t * led_strip_create_linux_spi(const char * device,
     // Set the backend functions
     led_strip->show = &led_strip_show_linux_spi;
     led_strip->destroy = &led_strip_destroy_linux_spi;
-    
+
     // Allocate and configure backend data
     led_strip->backend_data = calloc(sizeof(led_strip_backend_linux_spi_t), 1);
 
@@ -80,7 +81,7 @@ led_strip_t * led_strip_create_linux_spi(const char * device,
         ((led_strip_backend_linux_spi_t*)led_strip->backend_data);
 
     backend_data->fd = fd;
-    
+
     // Header
     backend_data->xfer[0].tx_buf = (unsigned long) led_strip->header_data;
     backend_data->xfer[0].len = HEADER_LENGTH_IN_BYTES;
@@ -96,16 +97,16 @@ led_strip_t * led_strip_create_linux_spi(const char * device,
     backend_data->xfer[2].len = led_strip->footer_len;
     backend_data->xfer[2].speed_hz = frequency;
     backend_data->xfer[2].bits_per_word = bits;
-    
+
     return led_strip;
 }
 
 int led_strip_show_linux_spi(led_strip_t * led_strip)
 {
-    led_strip_backend_linux_spi_t backend_data =
-            *((led_strip_backend_linux_spi_t*)led_strip->backend_data);
+    led_strip_backend_linux_spi_t * backend_data =
+        ((led_strip_backend_linux_spi_t*)led_strip->backend_data);
 
-    int ret = ioctl(backend_data.fd, SPI_IOC_MESSAGE(3), backend_data.xfer);
+    int ret = ioctl(backend_data->fd, SPI_IOC_MESSAGE(3), backend_data->xfer);
     if (ret < 1) {
         printf("Can't send spi message.\n");
         return ret;
@@ -116,7 +117,7 @@ int led_strip_show_linux_spi(led_strip_t * led_strip)
 void led_strip_destroy_linux_spi(led_strip_t * led_strip)
 {
     assert(led_strip->backend_data && "No backend created in create function");
-    
+
     // Cast to the correct backend
     led_strip_backend_linux_spi_t * backend_data =
         ((led_strip_backend_linux_spi_t*)led_strip->backend_data);
