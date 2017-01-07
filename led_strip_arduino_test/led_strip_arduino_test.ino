@@ -1,6 +1,5 @@
 
 #include "led_strip_arduino_spi_backend.h"
-#include "led_strip.h"
 
 led_strip_t * strip;
 
@@ -36,19 +35,17 @@ uint8_t lightness_8bit_50[50] = {
 #define RED 0
 #define GREEN 1
 #define BLUE 2
-uint32_t log_len = 50;
-uint8_t color_changing = GREEN;
-int8_t dir = 1;
-uint8_t r = 255, g = 0, b = 0;
 
 void setup() {
   // put your setup code here, to run once:
   uint32_t num_leds = 300;
-  int slave_select_pin = 10;
+  uint32_t log_len = num_leds/6;
+  uint8_t color_changing = GREEN;
+  int8_t dir = 1;
+  uint8_t r = 255, g = 0, b = 0;
   uint32_t spi_freq_hz = 8000000;
-  Serial.begin(9600);
-  strip = led_strip_create_arduino_spi(slave_select_pin,
-                                       spi_freq_hz,
+
+  strip = led_strip_create_arduino_spi(spi_freq_hz,
                                        num_leds);
   for (int i = 0; i < 6; i++) {
     for (uint32_t i = (dir == 1) ? 0 : log_len-1 ; i < log_len && i >=0 ; i+=dir) {
@@ -76,11 +73,8 @@ void setup() {
   }
 }
 
-
-
 void loop() {
   // put your main code here, to run repeatedly:
-
   led_strip_rotate_right(strip);
   led_strip_show(strip);
   delay(10);
