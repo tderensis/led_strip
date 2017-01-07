@@ -1,8 +1,9 @@
-/*
+/*!
 @file led_strip_struct.h
 
 @brief The definition of the led strip object.
-*/
+**/
+
 #ifndef LED_STRIP_STRUCT_H
 #define LED_STRIP_STRUCT_H
 
@@ -18,4 +19,5 @@ struct _led_strip_t {
     void (*destroy) (led_strip_t *);
     void * backend_data; // Backend dependent data
 };
+
 #endif

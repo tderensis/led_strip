@@ -6,8 +6,9 @@
 
 #include "led_strip.h"
 #include "led_strip_struct.h"
-#include "led_strip_no_backend.h"
+
 #include <assert.h>  // for assert
+#include <stdlib.h>  // for free
 #include <stddef.h>  // for NULL
 
 #define PIXEL_BRIGHTNESS_MASK 0x1F
@@ -22,7 +23,19 @@ void led_strip_destroy(led_strip_t * led_strip)
     led_strip->destroy(led_strip);
 
     // Then destroy everything else.
-    led_strip_destroy_no_backend(led_strip);
+    if (led_strip->pixels) {
+        free(led_strip->pixels);
+    }
+
+    if (led_strip->header_data) {
+        free(led_strip->header_data);
+    }
+
+    if (led_strip->footer_data) {
+        free(led_strip->footer_data);
+    }
+
+    free(led_strip);
 }
 
 int led_strip_show(led_strip_t * led_strip)
