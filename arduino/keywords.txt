@@ -1,0 +1,14 @@
+LedStripArduinoSpi	KEYWORD1
+show	KEYWORD2
+clear	KEYWORD2
+setPixelColorAndBrightness	KEYWORD2
+setPixelColor	KEYWORD2
+setPixelBrightness	KEYWORD2
+getPixelColorAndBrightness	KEYWORD2
+setColorAndBrightness	KEYWORD2
+setColor	KEYWORD2
+setBrightness	KEYWORD2
+pushPixelFront	KEYWORD2
+pushPixelBack	KEYWORD2
+rotateLeft	KEYWORD2
+rotateRight	KEYWORD2

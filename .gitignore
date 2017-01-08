@@ -1,0 +1,9 @@
+*.zip
+*.o
+arduino/led_strip-cpp-implementation.h
+arduino/led_strip-cpp.h
+arduino/led_strip.cpp
+arduino/led_strip.h
+arduino/led_strip_no_backend.cpp
+arduino/led_strip_no_backend.h
+arduino/led_strip_struct.h
