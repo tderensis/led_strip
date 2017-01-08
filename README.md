@@ -28,20 +28,20 @@ led_strip_t * strip = led_strip_create_linux_spi(spi_dev, frequency_hz, leds);
 When the strip is created it sets every pixel to off. Next you can set the pixels of the strip. These functions only modify memory and do not write to the strip. This allows you to change multiple pixels and then write the changes all at once.
 
 ``` c
-uint32_t p = 9; \\ pixel index (starting at 0)
-uint8_t r = 255, g = 255, b = 0; \\ yellow
-uint8_t brightness = PIXEL_MAX_BRIGHTNESS; \\ Max is 32, Min is 0 (off)
+uint32_t p = 9; // pixel index (starting at 0)
+uint8_t r = 255, g = 255, b = 0; // yellow
+uint8_t brightness = PIXEL_MAX_BRIGHTNESS; // Max is 32, Min is 0 (off)
 
-\\ Set everything
+// Set everything
 led_strip_set_pixel_color_and_brightness(strip, p, r, g, b, brightness);
 
-\\ Only set color
+// Only set color
 led_strip_set_pixel_color(strip, p, r, g, b);
 
-\\ Only set brightness
+// Only set brightness
 led_strip_set_pixel_brightness(strip, p, brightness);
 
-\\ Get the value of a given pixel. Passing NULL will ignore that component.
+// Get the value of a given pixel. Passing NULL will ignore that component.
 led_strip_set_pixel_color_and_brightness(strip, p, &r, &g, &b, NULL);
 
 ```
@@ -123,11 +123,13 @@ So far the following backends are complete.
 
 ### Linux SPI
 To build examples
+
 ```
 cd build
 cmake ../
 make
 ```
+
 Examples will be installed to bin.
 
 ### Arduino SPI
