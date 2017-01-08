@@ -1,0 +1,4 @@
+add_executable(led_strip_linux_spi_example led_strip_linux_spi_example.c)
+
+target_link_libraries(led_strip_linux_spi_example LINK_PUBLIC led_strip)
+target_link_libraries(led_strip_linux_spi_example LINK_PUBLIC led_strip_linux_spi_backend)

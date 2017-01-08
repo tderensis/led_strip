@@ -1,0 +1,8 @@
+add_subdirectory(examples)
+
+add_library(led_strip_linux_spi_backend led_strip_linux_spi_backend.c)
+
+target_include_directories(led_strip_linux_spi_backend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(led_strip_linux_spi_backend PUBLIC ${LedStrip_SOURCE_DIR}/src)
+
+target_link_libraries(led_strip_linux_spi_backend LINK_PUBLIC led_strip)
