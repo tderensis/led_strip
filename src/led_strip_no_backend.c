@@ -23,7 +23,8 @@ led_strip_t * led_strip_create_no_backend(uint32_t num_leds)
         goto led_strip_allocation_error;
     }
 
-    led_strip->pixels = (uint32_t *) malloc(num_leds * sizeof(uint32_t));
+    led_strip->num_leds = num_leds;
+    led_strip->pixels = (uint32_t *) malloc(led_strip->num_leds * sizeof(uint32_t));
 
     if (!led_strip->pixels) {
         goto led_strip_pixel_allocation_error;
@@ -47,8 +48,6 @@ led_strip_t * led_strip_create_no_backend(uint32_t num_leds)
 
     // Footer is all ones
     memset(led_strip->footer_data, 0xFF, led_strip->footer_len);
-
-    led_strip->num_leds = num_leds;
 
     // Make sure the led strip is off
     led_strip_clear(led_strip);
